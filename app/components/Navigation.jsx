@@ -9,13 +9,13 @@ const Nav = React.createClass({
         <div className="top-bar-left">
           <ul className="menu">
             <li>
-              <IndexLink to="/" className="menu-text" activeClassName="active-link">ReactTimerApp</IndexLink>
+              <IndexLink to="/" className="menu-text" activeClassName="active-link" activeStyle={{fontWeight: 'bold'}}>ReactTimerApp</IndexLink>
             </li>
             <li>
-              <Link to="/about" activeClassName="active-link">Timer</Link>
+              <Link to="/Timer" activeClassName="active-link" activeStyle={{fontWeight: 'bold' }}>Timer</Link>
             </li>
             <li>
-              <Link to="/examples" activeClassName="active-link">CountDown</Link>
+              <Link to="/Countdown" activeClassName="active-link" activeStyle={{fontWeight: 'bold'}}>Countdown</Link>
             </li>
           </ul>
         </div>
