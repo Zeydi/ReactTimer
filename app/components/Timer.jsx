@@ -1,9 +1,12 @@
 import React from 'react';
-
+import Clock from 'Clock';
 class Timer extends React.Component {
 render() {
   return (
-  <h2>Timer</h2>
+    <div>
+      <h2>Timer</h2>
+      <Clock totalSeconds={123}/>
+    </div>
   )
 }
 }

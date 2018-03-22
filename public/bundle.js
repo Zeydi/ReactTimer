@@ -123,13 +123,13 @@
 
 	var Main = __webpack_require__(223);
 	var Timer = __webpack_require__(225);
-	var Countdown = __webpack_require__(226);
+	var Countdown = __webpack_require__(227);
 
 	//load foundation
-	__webpack_require__(227);
+	__webpack_require__(228);
 	$(document).foundation();
 	// App css
-	__webpack_require__(232);
+	__webpack_require__(233);
 	ReactDOM.render(React.createElement(
 	  Router,
 	  { history: hashHistory },
@@ -25048,6 +25048,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Clock = __webpack_require__(226);
+
+	var _Clock2 = _interopRequireDefault(_Clock);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25069,9 +25073,14 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'h2',
+	        'div',
 	        null,
-	        'Timer'
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Timer'
+	        ),
+	        _react2.default.createElement(_Clock2.default, { totalSeconds: 123 })
 	      );
 	    }
 	  }]);
@@ -25083,6 +25092,70 @@
 
 /***/ }),
 /* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Clock = function (_React$Component) {
+	  _inherits(Clock, _React$Component);
+
+	  function Clock() {
+	    _classCallCheck(this, Clock);
+
+	    return _possibleConstructorReturn(this, (Clock.__proto__ || Object.getPrototypeOf(Clock)).apply(this, arguments));
+	  }
+
+	  _createClass(Clock, [{
+	    key: 'formatSeconds',
+	    value: function formatSeconds(sec) {
+	      var minutes = Math.round(sec / 60);
+	      var seconds = sec % 60;
+	      if (minutes < 10) {
+	        minutes = '0' + minutes;
+	      }
+	      if (seconds < 10) {
+	        seconds = '0' + seconds;
+	      }
+	      return minutes + ':' + seconds;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var totalSeconds = this.props.totalSeconds;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'clock' },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'clock-text' },
+	          this.formatSeconds(totalSeconds)
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Clock;
+	}(_react2.default.Component);
+
+	module.exports = Clock;
+
+/***/ }),
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25127,11 +25200,11 @@
 	module.exports = Countdown;
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	var content = __webpack_require__(228);
+	var content = __webpack_require__(229);
 
 	if(typeof content === 'string') content = [[module.id, content, '']];
 
@@ -25145,7 +25218,7 @@
 	options.transform = transform
 	options.insertInto = undefined;
 
-	var update = __webpack_require__(230)(content, options);
+	var update = __webpack_require__(231)(content, options);
 
 	if(content.locals) module.exports = content.locals;
 
@@ -25177,10 +25250,10 @@
 	}
 
 /***/ }),
-/* 228 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(229)(false);
+	exports = module.exports = __webpack_require__(230)(false);
 	// imports
 
 
@@ -25191,7 +25264,7 @@
 
 
 /***/ }),
-/* 229 */
+/* 230 */
 /***/ (function(module, exports) {
 
 	/*
@@ -25273,7 +25346,7 @@
 
 
 /***/ }),
-/* 230 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -25339,7 +25412,7 @@
 	var	singletonCounter = 0;
 	var	stylesInsertedAtTop = [];
 
-	var	fixUrls = __webpack_require__(231);
+	var	fixUrls = __webpack_require__(232);
 
 	module.exports = function(list, options) {
 		if (false) {
@@ -25655,7 +25728,7 @@
 
 
 /***/ }),
-/* 231 */
+/* 232 */
 /***/ (function(module, exports) {
 
 	
@@ -25750,11 +25823,11 @@
 
 
 /***/ }),
-/* 232 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	var content = __webpack_require__(233);
+	var content = __webpack_require__(234);
 
 	if(typeof content === 'string') content = [[module.id, content, '']];
 
@@ -25768,7 +25841,7 @@
 	options.transform = transform
 	options.insertInto = undefined;
 
-	var update = __webpack_require__(230)(content, options);
+	var update = __webpack_require__(231)(content, options);
 
 	if(content.locals) module.exports = content.locals;
 
@@ -25800,15 +25873,15 @@
 	}
 
 /***/ }),
-/* 233 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(229)(false);
+	exports = module.exports = __webpack_require__(230)(false);
 	// imports
 
 
 	// module
-	exports.push([module.id, ".top-bar, .top-bar ul {\n  background-color: #333333; }\n\n.top-bar .menu-text {\n  color: white; }\n\n.top-bar .menu > .menu-text > a {\n  display: inline;\n  padding: 0; }\n\n.top-bar .active-link {\n  font-weight: bold; }\n", ""]);
+	exports.push([module.id, ".top-bar, .top-bar ul {\n  background-color: #333333; }\n\n.top-bar .menu-text {\n  color: white; }\n\n.top-bar .menu > .menu-text > a {\n  display: inline;\n  padding: 0; }\n\n.top-bar .active-link {\n  font-weight: bold; }\n\n.clock {\n  align-items: center;\n  width: 14rem;\n  height: 14rem;\n  display: flex;\n  border-radius: 50%;\n  background-color: #67DCEF;\n  margin: 4rem auto;\n  justify-content: center;\n  border: 2px solid #2099E8; }\n\n.clock-text {\n  color: white;\n  font-size: 2.2rem;\n  font-weight: 300; }\n", ""]);
 
 	// exports
 
