@@ -25330,7 +25330,6 @@
 	      if (this.state.countdownStatus !== prevState.countdownStatus) {
 	        switch (this.state.countdownStatus) {
 	          case 'started':
-	            console.log('sayeeee');
 	            this.startTimer();
 	            break;
 	          case 'stopped':
@@ -25341,6 +25340,12 @@
 	            break;
 	        }
 	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      clearInterval(this.timer);
+	      this.timer = undefined;
 	    }
 	  }, {
 	    key: 'onStatusChange',
@@ -25359,10 +25364,9 @@
 	        _this2.setState({
 	          count: newCount >= 0 ? newCount : 0
 	        });
-	        if (_this2.state.count === 0) {
-	          clearInterval(timer);
+	        if (newCount === 0) {
+	          _this2.setState({ countdownStatus: 'stopped' });
 	        }
-	        console.log(_this2.state.count);
 	      }, 1000);
 	    }
 	  }, {
