@@ -126,10 +126,10 @@
 	var Countdown = __webpack_require__(228);
 
 	//load foundation
-	__webpack_require__(231);
+	__webpack_require__(230);
 	$(document).foundation();
 	// App css
-	__webpack_require__(236);
+	__webpack_require__(235);
 	ReactDOM.render(React.createElement(
 	  Router,
 	  { history: hashHistory },
@@ -25047,9 +25047,9 @@
 
 	var _Clock2 = _interopRequireDefault(_Clock);
 
-	var _TimerForm = __webpack_require__(227);
+	var _Controls = __webpack_require__(227);
 
-	var _TimerForm2 = _interopRequireDefault(_TimerForm);
+	var _Controls2 = _interopRequireDefault(_Controls);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25069,59 +25069,49 @@
 
 	    _this.state = {
 	      count: 0,
-	      status: null,
-	      clear: 0
-
+	      timerStatus: 'paused'
 	    };
-	    _this.handleSetTimer = _this.handleSetTimer.bind(_this);
-	    _this.handlePause = _this.handlePause.bind(_this);
-	    _this.handleStart = _this.handleStart.bind(_this);
-	    _this.handleClear = _this.handleClear.bind(_this);
+	    _this.startTimer = _this.startTimer.bind(_this);
+	    _this.onStatusChange = _this.onStatusChange.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(Timer, [{
-	    key: 'handleSetTimer',
-	    value: function handleSetTimer() {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps, prevState) {
+	      if (this.state.timerStatus !== prevState.timerStatus) {
+	        switch (this.state.timerStatus) {
+	          case 'started':
+	            console.log('started');
+	            this.startTimer();
+	            break;
+	          case 'stopped':
+	            this.setState({
+	              count: 0
+	            });
+	          case 'paused':
+	            clearInterval(this.timer);
+	            this.timer = undefined;
+	            break;
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'startTimer',
+	    value: function startTimer() {
 	      var _this2 = this;
 
-	      this.setState({
-	        label: 1
-	      });
-	      var int = setInterval(function () {
-	        _this2.setState({
-	          count: _this2.state.count + 1
-	        });
-	        if (_this2.state.status === 0 || _this2.state.clear === 1) {
-	          clearInterval(int);
-	        }
-	        if (_this2.state.count === 0) {
-	          clearInterval(int);
-	        }
-
+	      this.timer = setInterval(function () {
+	        var newCount = _this2.state.count + 1;
+	        _this2.setState({ count: newCount });
 	        console.log(_this2.state.count);
 	      }, 1000);
 	    }
 	  }, {
-	    key: 'handlePause',
-	    value: function handlePause() {
+	    key: 'onStatusChange',
+	    value: function onStatusChange(newStatus) {
 	      this.setState({
-	        label: 0,
-	        status: 0
-	      });
-	    }
-	  }, {
-	    key: 'handleStart',
-	    value: function handleStart() {
-	      this.handleSetTimer();
-	    }
-	  }, {
-	    key: 'handleClear',
-	    value: function handleClear() {
-	      this.setState({
-	        count: 0,
-	        label: 0,
-	        clear: 1
+	        timerStatus: newStatus
 	      });
 	    }
 	  }, {
@@ -25136,13 +25126,7 @@
 	          'Timer'
 	        ),
 	        _react2.default.createElement(_Clock2.default, { totalSeconds: this.state.count }),
-	        _react2.default.createElement(_TimerForm2.default, {
-	          handleSetTimer: this.handleSetTimer,
-	          handlePause: this.handlePause,
-	          handleStart: this.handleStart,
-	          handleClear: this.handleClear,
-	          label: this.state.label
-	        })
+	        _react2.default.createElement(_Controls2.default, { countdownStatus: this.state.timerStatus, onStatusChange: this.onStatusChange })
 	      );
 	    }
 	  }]);
@@ -25220,59 +25204,60 @@
 /* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var React = __webpack_require__(8);
 
-	var _react = __webpack_require__(8);
+	var Controls = React.createClass({
+	  displayName: 'Controls',
 
-	var _react2 = _interopRequireDefault(_react);
+	  propTypes: {
+	    countdownStatus: React.PropTypes.string.isRequired,
+	    onStatusChange: React.PropTypes.func.isRequired
+	  },
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	  onStatusChange: function onStatusChange(newStatus) {
+	    var _this = this;
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	    return function () {
+	      _this.props.onStatusChange(newStatus);
+	    };
+	  },
+	  render: function render() {
+	    var _this2 = this;
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	    var countdownStatus = this.props.countdownStatus;
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	    var renderStartStopButton = function renderStartStopButton() {
+	      if (countdownStatus === 'started') {
+	        return React.createElement(
+	          'button',
+	          { className: 'button secondary', onClick: _this2.onStatusChange('paused') },
+	          'Pause'
+	        );
+	      } else {
+	        return React.createElement(
+	          'button',
+	          { className: 'button primary', onClick: _this2.onStatusChange('started') },
+	          'Start'
+	        );
+	      }
+	    };
 
-	var TimerForm = function (_React$Component) {
-	  _inherits(TimerForm, _React$Component);
-
-	  function TimerForm() {
-	    _classCallCheck(this, TimerForm);
-
-	    return _possibleConstructorReturn(this, (TimerForm.__proto__ || Object.getPrototypeOf(TimerForm)).apply(this, arguments));
+	    return React.createElement(
+	      'div',
+	      { className: 'controls' },
+	      renderStartStopButton(),
+	      React.createElement(
+	        'button',
+	        { className: 'button alert hollow', onClick: this.onStatusChange('stopped') },
+	        'Clear'
+	      )
+	    );
 	  }
+	});
 
-	  _createClass(TimerForm, [{
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "countdown-control" },
-	        this.props.label ? _react2.default.createElement(
-	          "button",
-	          { className: "button secondary", onClick: this.props.handlePause },
-	          "Pause"
-	        ) : _react2.default.createElement(
-	          "button",
-	          { className: "button primary", onClick: this.props.handleStart },
-	          "Start"
-	        ),
-	        _react2.default.createElement(
-	          "button",
-	          { className: "button warning", onClick: this.props.handleClear },
-	          "Clear"
-	        )
-	      );
-	    }
-	  }]);
-
-	  return TimerForm;
-	}(_react2.default.Component);
-
-	module.exports = TimerForm;
+	module.exports = Controls;
 
 /***/ }),
 /* 228 */
@@ -25290,11 +25275,11 @@
 
 	var _Clock2 = _interopRequireDefault(_Clock);
 
-	var _Controls = __webpack_require__(229);
+	var _Controls = __webpack_require__(227);
 
 	var _Controls2 = _interopRequireDefault(_Controls);
 
-	var _CountdownForm = __webpack_require__(230);
+	var _CountdownForm = __webpack_require__(229);
 
 	var _CountdownForm2 = _interopRequireDefault(_CountdownForm);
 
@@ -25415,65 +25400,6 @@
 
 	'use strict';
 
-	var React = __webpack_require__(8);
-
-	var Controls = React.createClass({
-	  displayName: 'Controls',
-
-	  propTypes: {
-	    countdownStatus: React.PropTypes.string.isRequired,
-	    onStatusChange: React.PropTypes.func.isRequired
-	  },
-
-	  onStatusChange: function onStatusChange(newStatus) {
-	    var _this = this;
-
-	    return function () {
-	      _this.props.onStatusChange(newStatus);
-	    };
-	  },
-	  render: function render() {
-	    var _this2 = this;
-
-	    var countdownStatus = this.props.countdownStatus;
-
-	    var renderStartStopButton = function renderStartStopButton() {
-	      if (countdownStatus === 'started') {
-	        return React.createElement(
-	          'button',
-	          { className: 'button secondary', onClick: _this2.onStatusChange('paused') },
-	          'Pause'
-	        );
-	      } else if (countdownStatus === 'paused') {
-	        return React.createElement(
-	          'button',
-	          { className: 'button primary', onClick: _this2.onStatusChange('started') },
-	          'Start'
-	        );
-	      }
-	    };
-
-	    return React.createElement(
-	      'div',
-	      { className: 'controls' },
-	      renderStartStopButton(),
-	      React.createElement(
-	        'button',
-	        { className: 'button alert hollow', onClick: this.onStatusChange('stopped') },
-	        'Clear'
-	      )
-	    );
-	  }
-	});
-
-	module.exports = Controls;
-
-/***/ }),
-/* 230 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(8);
@@ -25540,11 +25466,11 @@
 	module.exports = CountdownForm;
 
 /***/ }),
-/* 231 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	var content = __webpack_require__(232);
+	var content = __webpack_require__(231);
 
 	if(typeof content === 'string') content = [[module.id, content, '']];
 
@@ -25558,7 +25484,7 @@
 	options.transform = transform
 	options.insertInto = undefined;
 
-	var update = __webpack_require__(234)(content, options);
+	var update = __webpack_require__(233)(content, options);
 
 	if(content.locals) module.exports = content.locals;
 
@@ -25590,10 +25516,10 @@
 	}
 
 /***/ }),
-/* 232 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(233)(false);
+	exports = module.exports = __webpack_require__(232)(false);
 	// imports
 
 
@@ -25604,7 +25530,7 @@
 
 
 /***/ }),
-/* 233 */
+/* 232 */
 /***/ (function(module, exports) {
 
 	/*
@@ -25686,7 +25612,7 @@
 
 
 /***/ }),
-/* 234 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -25752,7 +25678,7 @@
 	var	singletonCounter = 0;
 	var	stylesInsertedAtTop = [];
 
-	var	fixUrls = __webpack_require__(235);
+	var	fixUrls = __webpack_require__(234);
 
 	module.exports = function(list, options) {
 		if (false) {
@@ -26068,7 +25994,7 @@
 
 
 /***/ }),
-/* 235 */
+/* 234 */
 /***/ (function(module, exports) {
 
 	
@@ -26163,11 +26089,11 @@
 
 
 /***/ }),
-/* 236 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	var content = __webpack_require__(237);
+	var content = __webpack_require__(236);
 
 	if(typeof content === 'string') content = [[module.id, content, '']];
 
@@ -26181,7 +26107,7 @@
 	options.transform = transform
 	options.insertInto = undefined;
 
-	var update = __webpack_require__(234)(content, options);
+	var update = __webpack_require__(233)(content, options);
 
 	if(content.locals) module.exports = content.locals;
 
@@ -26213,10 +26139,10 @@
 	}
 
 /***/ }),
-/* 237 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(233)(false);
+	exports = module.exports = __webpack_require__(232)(false);
 	// imports
 
 

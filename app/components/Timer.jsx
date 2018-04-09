@@ -1,7 +1,6 @@
 import React from 'react';
 import Clock from 'Clock';
-import TimerForm from 'TimerForm';
-
+import Controls from 'Controls'
 
 
 class Timer extends React.Component {
@@ -9,65 +8,48 @@ class Timer extends React.Component {
     super(props);
     this.state = {
       count: 0,
-      status:null,
-      clear:0
-
-
+      timerStatus: 'paused'
     }
-    this.handleSetTimer=this.handleSetTimer.bind(this)
-    this.handlePause=this.handlePause.bind(this)
-    this.handleStart=this.handleStart.bind(this)
-    this.handleClear=this.handleClear.bind(this)
+    this.startTimer = this.startTimer.bind(this)
+    this.onStatusChange = this.onStatusChange.bind(this)
   }
-
-  handleSetTimer(){
-     this.setState({
-       label:1
-    })
-    var int = setInterval( () => { this.setState({
-     count:  this.state.count + 1
-   })
-   if (this.state.status === 0 || this.state.clear === 1) {
-     clearInterval(int)}
-     if (this.state.count === 0 ) {
-        clearInterval(int)}
-
-  console.log(this.state.count)  }, 1000);
-
-
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.timerStatus !== prevState.timerStatus) {
+      switch (this.state.timerStatus) {
+        case 'started':
+          console.log('started')
+          this.startTimer();
+          break;
+        case 'stopped':
+          this.setState({
+            count: 0
+          });
+        case 'paused':
+          clearInterval(this.timer)
+          this.timer = undefined
+          break;
+      }
+    }
   }
-
-  handlePause(){
+  startTimer() {
+    this.timer = setInterval( () => {
+     let newCount = this.state.count + 1
+     this.setState({count: newCount})
+      console.log(this.state.count)  }, 1000);
+  }
+  onStatusChange(newStatus){
     this.setState({
-      label:0,
-      status:0
+      timerStatus: newStatus
     })
   }
-  handleStart(){
-    this.handleSetTimer()
+  render() {
+    return (
+      <div>
+        <h2>Timer</h2>
+        <Clock totalSeconds={this.state.count}/>
+        <Controls countdownStatus={this.state.timerStatus} onStatusChange={this.onStatusChange}/>
+      </div>
+    );
   }
-  handleClear(){
-    this.setState({
-      count: 0,
-      label: 0,
-      clear: 1
-    })
-  }
-
-render() {
-  return (
-    <div>
-      <h2>Timer</h2>
-      <Clock totalSeconds={this.state.count}/>
-      <TimerForm
-        handleSetTimer={this.handleSetTimer}
-        handlePause={this.handlePause}
-        handleStart={this.handleStart}
-        handleClear={this.handleClear}
-        label={this.state.label}
-      />
-    </div>
-  )
-}
 }
 module.exports = Timer;
