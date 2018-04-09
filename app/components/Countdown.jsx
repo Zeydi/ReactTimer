@@ -69,7 +69,7 @@ renderbutton() {
 
     return(
       <div>
-        <h2>Countdown</h2>
+         <h1 className="page-title">Countdown</h1>
         <Clock totalSeconds={this.state.count}/>
         {this.renderbutton()}
       </div>

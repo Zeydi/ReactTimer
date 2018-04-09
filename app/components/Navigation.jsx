@@ -21,7 +21,7 @@ const Nav = React.createClass({
         </div>
         <div className="top-bar-right">
           <ul className="menu">
-            <li className="menu-text">Made by <a href="#"  target="_blank">Oussema</a></li>
+            <li className="menu-text">Made by <a href="https://github.com/Zeydi/ReactTimer"  target="_blank">Oussema</a></li>
           </ul>
         </div>
       </div>

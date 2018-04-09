@@ -25019,7 +25019,7 @@
 	            'Made by ',
 	            React.createElement(
 	              'a',
-	              { href: '#', target: '_blank' },
+	              { href: 'https://github.com/Zeydi/ReactTimer', target: '_blank' },
 	              'Oussema'
 	            )
 	          )
@@ -25121,8 +25121,8 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'h2',
-	          null,
+	          'h1',
+	          { className: 'page-title' },
 	          'Timer'
 	        ),
 	        _react2.default.createElement(_Clock2.default, { totalSeconds: this.state.count }),
@@ -25379,8 +25379,8 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'h2',
-	          null,
+	          'h1',
+	          { className: 'page-title' },
 	          'Countdown'
 	        ),
 	        _react2.default.createElement(_Clock2.default, { totalSeconds: this.state.count }),
@@ -26147,7 +26147,7 @@
 
 
 	// module
-	exports.push([module.id, ".top-bar, .top-bar ul {\n  background-color: #333333; }\n\n.top-bar .menu-text {\n  color: white; }\n\n.top-bar .menu > .menu-text > a {\n  display: inline;\n  padding: 0; }\n\n.top-bar .active-link {\n  font-weight: bold; }\n\n.clock {\n  align-items: center;\n  width: 14rem;\n  height: 14rem;\n  display: flex;\n  border-radius: 50%;\n  background-color: #67DCEF;\n  margin: 4rem auto;\n  justify-content: center;\n  border: 2px solid #2099E8; }\n\n.clock-text {\n  color: white;\n  font-size: 2.2rem;\n  font-weight: 300; }\n\n.controls {\n  display: flex;\n  justify-content: center; }\n  .controls .button {\n    padding: .75rem 3rem; }\n  .controls .button:first-child {\n    margin-right: 1.5rem; }\n", ""]);
+	exports.push([module.id, ".top-bar, .top-bar ul {\n  background-color: #333333; }\n\n.top-bar .menu-text {\n  color: white; }\n\n.top-bar .menu > .menu-text > a {\n  display: inline;\n  padding: 0; }\n\n.top-bar .active-link {\n  font-weight: bold; }\n\n.clock {\n  align-items: center;\n  width: 14rem;\n  height: 14rem;\n  display: flex;\n  border-radius: 50%;\n  background-color: #67DCEF;\n  margin: 4rem auto;\n  justify-content: center;\n  border: 2px solid #2099E8; }\n\n.clock-text {\n  color: white;\n  font-size: 2.2rem;\n  font-weight: 300; }\n\n.controls {\n  display: flex;\n  justify-content: center; }\n  .controls .button {\n    padding: .75rem 3rem; }\n  .controls .button:first-child {\n    margin-right: 1.5rem; }\n\n.page-title {\n  margin: 2rem 0;\n  color: #495250;\n  border: 5px ridge white;\n  text-align: center; }\n", ""]);
 
 	// exports
 
